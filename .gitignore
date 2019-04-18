@@ -24,4 +24,4 @@ coverage
 build/
 
 package-lock.json
-bundle.js
+client/dist/bundle.js
