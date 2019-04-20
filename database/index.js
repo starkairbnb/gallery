@@ -22,7 +22,7 @@ let GallerySchema = mongoose.Schema({
     type: String
   },
   urls: {
-    type: [String]
+    type: String
   }
 })
 

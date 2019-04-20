@@ -25,3 +25,6 @@ build/
 
 package-lock.json
 bundle.js
+
+seedData.csv
+tenonly.csv
