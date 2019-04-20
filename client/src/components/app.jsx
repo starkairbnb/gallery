@@ -41,17 +41,17 @@ class App extends React.Component {
   }
 
   get() {
-    let id = Math.floor(Math.random() * 1e7) + 1;
+    let id = Math.floor(Math.random() * 10) + 1;
     // let id = 1;
     axios
       .get(`/api/photos/${id}`)
       .then(data => {
-        let urls = data.data[0].urls
-          .substring(1, data.data[0].urls.length - 1)
-          .split(',')
-          .map(url => url.substring(1, url.length - 1))
+        // let urls = data.data[0].urls
+        //   .substring(1, data.data[0].urls.length - 1)
+        //   .split(',')
+        //   .map(url => url.substring(1, url.length - 1))
         this.setState({
-          imageList: urls,
+          imageList: data.data[0].urls,
           location: data.data[0].location + ", CA, United States",
           name: data.data[0].title
         }, () => console.log(this.state));
