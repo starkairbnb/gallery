@@ -1,10 +1,3 @@
-// const db = require('./index.js');
-// const mongoose = require('mongoose');
-
-// const initData = require('./seedData.json');
-
-// mongoose.Promise = global.Promise;
-
 const fs = require('fs');
 
 const keywords = ['house', 'building', 'neighborhood', 'nature'];
