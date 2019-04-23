@@ -32,6 +32,10 @@ const generateUrls = (min, max) => {
   return urls;
 }
 
+const generatePropertyId = () => {
+
+}
+
 const createRecord = () => {
   return {
     title: generateTitle(),
@@ -40,7 +44,7 @@ const createRecord = () => {
   }
 }
 
-const dataWriteStream = fs.createWriteStream(__dirname + '/seedData.json');
+const dataWriteStream = fs.createWriteStream(__dirname + '/tenonly.json');
 
 function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
   let i = numberOfTimes; // 10M
@@ -51,7 +55,7 @@ function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
       // creates array of object values
       let temp = createRecordFunc();
       // inserts id value at beginning
-      temp.id = i;
+      temp.prop_id = i;
       // stringifies array
       let newRecord = JSON.stringify(temp); 
       // removes brackets and beginning and end of string
@@ -76,7 +80,7 @@ function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
 }
 
 
-writeNTimes(1e7, dataWriteStream, createRecord, () => {
+writeNTimes(10, dataWriteStream, createRecord, () => {
   // let start = Date.now();
   console.log(`write stream complete.`);
   // db.insertMany(initData).then(() => {
