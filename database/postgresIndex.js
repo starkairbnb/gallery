@@ -1,31 +1,18 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/gallery', {
-  useNewUrlParser: true
-});
-
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'Connection error'))
-db.once('open', function () {
-  console.log('Database connection established')
-});
-
-let GallerySchema = mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true,
-  },
-  location: {
-    type: String
-  },
-  title: {
-    type: String
-  },
-  urls: {
-    type: [String]
-  }
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('gallery', 'liezelmanalo', '', {
+  host: 'localhost',
+  dialect: 'postgres'
 })
 
-let Gallery = mongoose.model('Gallery', GallerySchema);
+sequelize.authenticate()
+  .then(() => {
+    console.log('****** connected to postgres ******')
+  })
+  .catch(err => {
+    console.log('Unable to connect to PostgreSQL:', err)
+  })
 
-module.exports = Gallery;
+
+module.exports = sequelize;
+
+// cat seedData.json | psql -h localhost gallery -c "COPY homes (id, location, title, urls) FROM STDIN;"

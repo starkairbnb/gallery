@@ -1,17 +1,15 @@
-const db = require('../database/postgresIndex.js')
+const db = require('../database/postgresModel');
 
 const controller = {
   get: (req, res) => {
     db
-      .find({
-        id: req.params.id
-      })
+      .findAll({ where: { id: req.params.id } })
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
   getAll: (req, res) => {
     db
-      .find({})
+      .findAll({})
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
@@ -24,13 +22,13 @@ const controller = {
   },
   delete: (req, res) => {
     db
-    .deleteOne({ id: req.params.id })
+    .destroy({ where: { id: req.params.id } })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   },
   update: (req, res) => {
     db
-    .updateOne({ id: req.params.id }, req.body)
+    .update(req.body, { where: { id: req.params.id } })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   }
