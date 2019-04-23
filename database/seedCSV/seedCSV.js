@@ -1,13 +1,3 @@
-// const db = require('./index.js');
-// const mongoose = require('mongoose');
-
-// const initData = require('./seed.json')
-// console.log(initData)
-
-// mongoose.Promise = global.Promise;
-
-// db.create(initData).then(() => mongoose.connection.close())
-
 const fs = require('fs');
 
 const keywords = ['house', 'building', 'neighborhood', 'nature'];
@@ -30,16 +20,16 @@ const generateUrls = (min, max) => {
   let numberOfPictures = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
   for (let i = 1; i <= numberOfPictures; i++) {
     let keyword = keywords[Math.floor(Math.random() * (3 - 0 + 1)) + 0];
-    urls.push(`\'https://loremflickr.com/320/240/${keyword}?random=${i}\'`)
+    urls.push(`https://loremflickr.com/320/240/${keyword}?random=${i}`)
   }
-  return "[" + urls + "]";
+  return "{" + urls + "}";
 }
 
 const createRecord = () => {
   return {
     title: generateTitle(),
     location: generateLocation(),
-    urls: generateUrls(5, 8)
+    urls: generateUrls(0, 8)
   }
 }
 
@@ -57,10 +47,10 @@ function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
       temp.unshift(i);
       // stringifies array
       let newRecord = JSON.stringify(temp);
-      // removes brackets and beginning and end of string
+      // removes brackets at beginning and end of string
       newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
       if (i === numberOfTimes + 1) {
-        writer.write('id, title, location, urls \n');
+        writer.write('prop_id, title, location, urls \n');
         i--;
       } else if (i === 1) {
         writer.write(newRecord, callback);
@@ -77,3 +67,5 @@ function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
 }
 
 writeNTimes(1e7, dataWriteStream, createRecord, () => console.log('write stream complete'));
+
+// COPY gallery FROM '/seedData.csv' DELIMITERS ',' CSV;
