@@ -11,18 +11,11 @@ db.once('open', function () {
 });
 
 let GallerySchema = mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true,
+  prop_id: {
+    type: Number
   },
-  location: {
+  url: {
     type: String
-  },
-  title: {
-    type: String
-  },
-  urls: {
-    type: [String]
   }
 })
 
