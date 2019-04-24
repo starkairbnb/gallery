@@ -12,6 +12,5 @@ router
   .route('/photos/')
   .get(controller.getAll)
   .post(controller.createOne)
-  
 
 module.exports = router;
