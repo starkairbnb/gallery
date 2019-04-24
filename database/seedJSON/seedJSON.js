@@ -33,7 +33,7 @@ const createRecord = () => {
   }
 }
 
-const dataWriteStream = fs.createWriteStream(__dirname + '/seedData.json');
+const dataWriteStream = fs.createWriteStream(__dirname + '/tenonly.json');
 
 function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
   let i = numberOfTimes; // 10M
@@ -67,13 +67,3 @@ function writeNTimes(numberOfTimes, writer, createRecordFunc, callback) {
     }
   }
 }
-
-
-writeNTimes(1e7, dataWriteStream, createRecord, () => {
-  // let start = Date.now();
-  console.log(`write stream complete.`);
-  // db.insertMany(initData).then(() => {
-  //   console.log(`database seeded. milliseconds: ${Date.now() - start}`)
-  //   mongoose.connection.close();
-  // }) 
-});

@@ -1,4 +1,4 @@
-const db = require('../database/mongooseIndex.js')
+const db = require('../database/mongooseIndex')
 
 const controller = {
   get: (req, res) => {
