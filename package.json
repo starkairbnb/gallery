@@ -39,10 +39,12 @@
     "mongoose": "^5.4.20",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
+    "pg": "^7.10.0",
     "react": "^16.8.5",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-dom": "^16.8.5",
     "react-responsive-carousel": "^3.1.47",
+    "sequelize": "^5.7.5",
     "style-loader": "^0.23.1"
   }
 }
