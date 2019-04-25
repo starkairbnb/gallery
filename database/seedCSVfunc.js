@@ -49,6 +49,6 @@ function writeNTimes(numberOfTimes, writer, createRecord, callback) {
 }
 
 
-writeNTimes(10, dataWriteStream, createRecord, () => {
+writeNTimes(5e7, dataWriteStream, createRecord, () => {
   console.log(`write stream complete.`);
 });

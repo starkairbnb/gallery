@@ -11,6 +11,9 @@ db.once('open', function () {
 });
 
 let GallerySchema = mongoose.Schema({
+  id: {
+    type: Number
+  },
   prop_id: {
     type: Number
   },
