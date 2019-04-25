@@ -2,11 +2,14 @@ const db = require('../database/index.js')
 
 const controller = {
   get: (req, res) => {
+    let { id } = req.params;
+    console.log('recieved request for id: ', id)
     db
-      .find({
-        id: req.params.id
+      .find({ id })
+      .then(data => {
+        console.log(data)
+        res.status(200).send(data)
       })
-      .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
   getAll: (req, res) => {
@@ -16,21 +19,24 @@ const controller = {
       .catch(err => res.status(404).send(err))
   },
   createOne: (req, res) => {
-    let { id, urls, title, location } = req.body;
+    console.log(req.body)
+    let { id, prop_id, url } = req.body;
     db
-    .create({ id, urls, title, location })
+    .create({ id, prop_id, url })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   },
   delete: (req, res) => {
+    let { id } = req.params;
     db
-    .deleteOne({ id: req.params.id })
+    .deleteOne({ id })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   },
   update: (req, res) => {
+    let { id } = req.params;
     db
-    .updateOne({ id: req.params.id }, req.body)
+    .updateOne({ id }, req.body)
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   }
