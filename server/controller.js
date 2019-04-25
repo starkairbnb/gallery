@@ -1,34 +1,52 @@
 const db = require('../database/postgresModel');
 
 const controller = {
-  get: (req, res) => {
+  getByPhotoId: (req, res) => {
+    let { id } = req.params;
     db
-      .findAll({ where: { id: req.params.id } })
+      .findAll({ where: { id } })
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
-  getAll: (req, res) => {
+  deleteByPhotoId: (req, res) => {
+    let { id } = req.params;
+    db
+    .destroy({ where: { id } })
+    .then(data => res.status(200).send('success'))
+    .catch(err => res.status(404).send(err))
+  },
+  updateByPhotoId: (req, res) => {
+    let { id } = req.params;
+    db
+    .update(req.body, { where: { id } })
+    .then(data => res.status(200).send('success'))
+    .catch(err => res.status(404).send(err))
+  },
+  getAllPhotos: (req, res) => {
     db
       .findAll({})
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
-  createOne: (req, res) => {
-    let { id, urls, title, location } = req.body;
+  addNewPhoto: (req, res) => {
+    let { id, prop_id, url } = req.body;
     db
-    .create({ id, urls, title, location })
+    .create({ id, prop_id, url })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   },
-  delete: (req, res) => {
+
+  getPhotosByPropId: (req, res) => {
+    let { prop_id } = req.params;
     db
-    .destroy({ where: { id: req.params.id } })
-    .then(data => res.status(200).send('success'))
-    .catch(err => res.status(404).send(err))
+      .findAll({ where: { prop_id } })
+      .then(data => res.status(200).send(data))
+      .catch(err => res.status(404).send(err))
   },
-  update: (req, res) => {
+  deleteAllPhotosAtPropId: (req, res) => {
+    let { prop_id } = req.params;
     db
-    .update(req.body, { where: { id: req.params.id } })
+    .destroy({ where: { prop_id } })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   }

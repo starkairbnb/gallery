@@ -4,14 +4,18 @@ const router = express.Router();
 
 router
   .route('/photos/:id')
-  .get(controller.get)
-  .delete(controller.delete)
-  .put(controller.update)
+  .get(controller.getByPhotoId)
+  .delete(controller.deleteByPhotoId)
+  .put(controller.updateByPhotoId)
 
 router
   .route('/photos/')
-  .get(controller.getAll)
-  .post(controller.createOne)
+  .get(controller.getAllPhotos)
+  .post(controller.addNewPhoto)
   
+router
+  .route('/property/:prop_id/photos')
+  .get(controller.getPhotosByPropId)
+  .delete(controller.deleteAllPhotosAtPropId)
 
 module.exports = router;
