@@ -4,6 +4,7 @@ const sequelize = require('./postgresIndex');
 const Home = sequelize.define('home', {
   id: {
     type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
   prop_id: {

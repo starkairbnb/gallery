@@ -29,10 +29,11 @@ const controller = {
       .catch(err => res.status(404).send(err))
   },
   addNewPhoto: (req, res) => {
-    let { id, prop_id, url } = req.body;
     db
-    .create({ id, prop_id, url })
-    .then(data => res.status(200).send('success'))
+    .create(req.body)
+    .then(data => {
+      res.status(200).send(data)
+    })
     .catch(err => res.status(404).send(err))
   },
 
