@@ -1,8 +1,9 @@
 const fs = require('fs');
 
-const generatePropId = (maxPropId) => {
-  let maximum = Math.floor(maxPropId);
-  return Math.floor(Math.random() * (maximum - 1 + 1)) + 1;
+const generatePropId = (minPropId, maxPropId) => {
+  min = Math.ceil(minPropId);
+  max = Math.floor(maxPropId);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const keywords = ['house', 'building', 'neighborhood', 'nature'];
@@ -12,9 +13,9 @@ const generateUrl = () => {
   return `https://loremflickr.com/320/240/${keyword}?random=1`;
 }
 
-const createRecord = (maxPropId) => {
+const createRecord = (minPropId, maxPropId) => {
   return {
-    prop_id: generatePropId(maxPropId),
+    prop_id: generatePropId(minPropId, maxPropId),
     url: generateUrl()
   }
 }
@@ -27,18 +28,41 @@ function writeNTimes(numberOfTimes, writer, createRecord, callback) {
   function write() {
     let ok = true;
     do {
-      let temp = Object.values(createRecord(1e7));
-      temp.unshift(i);
-      let newRecord = JSON.stringify(temp); 
-      newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
+      // if we are on the first i, write header in CSV
       if (i === 0) {
         writer.write('id, prop_id, url \n');
         i++;
-      } else if (i === numberOfTimes) {
-        writer.write(newRecord, callback);
-        i++;
-      } else {
+      // if i is less than than 5 million, assign a prop_id between 1 and 1 million
+      } else if (i <= 5e6) {
+          let temp = Object.values(createRecord(1, 1e6));
+          temp.unshift(i);
+          let newRecord = JSON.stringify(temp); 
+          newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
+          ok = writer.write(newRecord);
+          i++;
+      // if i is between 5 million and 45 million, assign a prop_id between 1,000,001 and 8,999,999
+      } else if (i > 5e6 && i < 45e6) {
+        let temp = Object.values(createRecord(1000001, 8999999));
+        temp.unshift(i);
+        let newRecord = JSON.stringify(temp); 
+        newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
         ok = writer.write(newRecord);
+        i++;
+      // if i is greater than 45 million, assign a prop_id between 9 million and 10 million
+      } else if (i >= 45e6 && i < numberOfTimes) {
+        let temp = Object.values(createRecord(9e6, 1e7));
+        temp.unshift(i);
+        let newRecord = JSON.stringify(temp); 
+        newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
+        ok = writer.write(newRecord);
+        i++;
+      // if we are on the last record, perform callback
+      } else if (i === numberOfTimes) {
+        let temp = Object.values(createRecord(9e6, 1e7));
+        temp.unshift(i);
+        let newRecord = JSON.stringify(temp); 
+        newRecord = newRecord.substring(1, newRecord.length - 1) + '\n';
+        writer.write(newRecord, callback);
         i++;
       }
     } while (i <= numberOfTimes && ok);
