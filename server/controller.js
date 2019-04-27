@@ -1,36 +1,53 @@
-const db = require('../database/index.js')
+const db = require('../database/postgresModel');
 
 const controller = {
-  get: (req, res) => {
+  getByPhotoId: (req, res) => {
+    let { id } = req.params;
     db
-      .find({
-        id: req.params.id
-      })
+      .findAll({ where: { id } })
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
-  getAll: (req, res) => {
+  deleteByPhotoId: (req, res) => {
+    let { id } = req.params;
     db
-      .find({})
+    .destroy({ where: { id } })
+    .then(data => res.status(200).send('success'))
+    .catch(err => res.status(404).send(err))
+  },
+  updateByPhotoId: (req, res) => {
+    let { id } = req.params;
+    db
+    .update(req.body, { where: { id } })
+    .then(data => res.status(200).send('success'))
+    .catch(err => res.status(404).send(err))
+  },
+  getAllPhotos: (req, res) => {
+    db
+      .findAll({})
       .then(data => res.status(200).send(data))
       .catch(err => res.status(404).send(err))
   },
-  createOne: (req, res) => {
-    let { id, urls, title, location } = req.body;
+  addNewPhoto: (req, res) => {
     db
-    .create({ id, urls, title, location })
-    .then(data => res.status(200).send('success'))
+    .create(req.body)
+    .then(data => {
+      res.status(200).send(data)
+    })
     .catch(err => res.status(404).send(err))
   },
-  delete: (req, res) => {
+
+  getPhotosByPropId: (req, res) => {
+    let { prop_id } = req.params;
     db
-    .deleteOne({ id: req.params.id })
-    .then(data => res.status(200).send('success'))
-    .catch(err => res.status(404).send(err))
+      .findAll({ where: { prop_id } })
+      .then(data => res.status(200).send(data))
+      .catch(err => res.status(404).send(err))
   },
-  update: (req, res) => {
+  deleteAllPhotosAtPropId: (req, res) => {
+    let { prop_id } = req.params;
     db
-    .updateOne({ id: req.params.id }, req.body)
+    .destroy({ where: { prop_id } })
     .then(data => res.status(200).send('success'))
     .catch(err => res.status(404).send(err))
   }
