@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "build": "webpack -d --watch",
-    "seed": "node database/seed.js"
+    "seed": "node database/seed.js",
+    "artillery": "artillery run artillery.yml"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "dependencies": {
     "acorn": "^6.1.1",
     "arrow-keys-react": "^1.0.6",
+    "artillery": "^1.6.0-27",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
@@ -38,6 +40,7 @@
     "fs": "0.0.1-security",
     "mongoose": "^5.4.20",
     "morgan": "^1.9.1",
+    "newrelic": "^5.7.0",
     "nodemon": "^1.18.10",
     "pg": "^7.10.0",
     "react": "^16.8.5",

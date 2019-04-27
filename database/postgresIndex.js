@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('gallery', 'liezelmanalo', '', {
   host: 'localhost',
-  dialect: 'postgres'
+  dialect: 'postgres',
+  logging: false,
+  pool: { maxConnections: 20, maxIdleTime: 30 }
 })
 
 sequelize.authenticate()
