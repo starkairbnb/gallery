@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('gallery', 'liezelmanalo', '', {
-  host: 'localhost',
+const sequelize = new Sequelize('gallery', 'postgres', 'password', {
+  host: '52.23.196.21',
   dialect: 'postgres',
   logging: false,
   pool: { maxConnections: 20, maxIdleTime: 30 }
