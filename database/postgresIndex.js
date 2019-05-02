@@ -16,5 +16,3 @@ sequelize.authenticate()
 
 
 module.exports = sequelize;
-
-// cat seedData.json | psql -h localhost gallery -c "COPY homes (id, location, title, urls) FROM STDIN;"
